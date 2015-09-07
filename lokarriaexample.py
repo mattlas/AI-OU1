@@ -10,6 +10,7 @@ Updated by Ola Ringdahl 204-09-11
 MRDS_URL = 'localhost:50000'
 
 import httplib, json, time
+from pprint import pprint
 from math import sin,cos,pi,atan2
 
 HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
@@ -112,7 +113,7 @@ def getBearing():
 
 if __name__ == '__main__':
     
-    json_data=open(path.json).read()
+    json_data=open('path.json').read()
     data = json.loads(json_data)
     pprint(data)
 
