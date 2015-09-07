@@ -111,6 +111,11 @@ def getBearing():
     return bearing(getPose()['Pose']['Orientation'])
 
 if __name__ == '__main__':
+    
+    json_data=open(file_directory).read()
+    data = json.loads(json_data)
+    pprint(data)
+
     print 'Sending commands to MRDS server', MRDS_URL
     try:
         print 'Telling the robot to go streight ahead.'
