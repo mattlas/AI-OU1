@@ -112,7 +112,7 @@ def getBearing():
     return bearing(getPose()['Pose']['Orientation'])
 
 if __name__ == '__main__':
-    
+
     json_data=open('path.json').read()
     data = json.loads(json_data)
     pprint(data)
