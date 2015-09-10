@@ -113,9 +113,12 @@ def getBearing():
 
 if __name__ == '__main__':
 
-    json_data=open('path.json').read()
+    json_data=open('path-to-bed.json').read()
     data = json.loads(json_data)
     """pprint(data)"""
+
+    pos = getPose()
+    pprint(pos)
 
     """print 'Sending commands to MRDS server', MRDS_URL
     try:
