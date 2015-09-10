@@ -10,7 +10,6 @@ Updated by Ola Ringdahl 204-09-11
 MRDS_URL = 'localhost:50000'
 
 import httplib, json, time
-from pprint import pprint
 from math import sin,cos,pi,atan2
 
 HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
@@ -111,14 +110,29 @@ def getBearing():
     """Returns the XY Orientation as a bearing unit vector"""
     return bearing(getPose()['Pose']['Orientation'])
 
+def getAngSpeed(p,cp):
+    pprint(p)
+    pprint(cp)
+    return speed
+
+def getLinSpeed(p,cp):
+    
+    return speed
+
+def pprint(p):
+    print json.dumps(p,sort_keys=True,indent=4, separators=(',', ': '))
+
 if __name__ == '__main__':
 
     json_data=open('path-to-bed.json').read()
     data = json.loads(json_data)
-    """pprint(data)"""
 
-    pos = getPose()
-    pprint(pos)
+    for p in data:
+        
+        angSpeed = getAngSpeed(p['Pose'],getPose()['Pose'])
+        """linSpeed = getLinSpeed(p,getPose())
+        postSpeed(angSpeed,linSpeed)"""
+        
 
     """print 'Sending commands to MRDS server', MRDS_URL
     try:
