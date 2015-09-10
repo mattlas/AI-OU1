@@ -117,7 +117,7 @@ if __name__ == '__main__':
     data = json.loads(json_data)
     """pprint(data)"""
 
-    print 'Sending commands to MRDS server', MRDS_URL
+    """print 'Sending commands to MRDS server', MRDS_URL
     try:
         print 'Telling the robot to go streight ahead.'
         response = postSpeed(0,0.1) 
@@ -146,4 +146,4 @@ if __name__ == '__main__':
             print 'Current heading vector: X:{X:.3}, Y:{Y:.3}'.format(**getBearing())
             time.sleep(1)
     except UnexpectedResponse, ex:
-        print 'Unexpected response from server when reading position:', ex
+        print 'Unexpected response from server when reading position:', ex"""
