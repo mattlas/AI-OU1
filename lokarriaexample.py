@@ -10,7 +10,7 @@ Updated by Ola Ringdahl 204-09-11
 MRDS_URL = 'localhost:50000'
 
 import httplib, json, time
-from math import sin,cos,pi,atan2
+from math import sin,cos,pi,atan2,sqrt
 
 HEADERS = {"Content-type": "application/json", "Accept": "text/json"}
 
@@ -110,28 +110,50 @@ def getBearing():
     """Returns the XY Orientation as a bearing unit vector"""
     return bearing(getPose()['Pose']['Orientation'])
 
-def getAngSpeed(p,cp):
-    pprint(p)
-    pprint(cp)
+def getAngSpeed(gp,rp):
+    speed = 0
+    d = getDistanceTo(gp)
+    
+    dy = gp['Position']['Y'] - rp['Position']['Y']
+    dx = gp['Position']['X'] - rp['Position']['X']
+    
+    angle = atan2(dy,dx)
+    pprint(getPose()['Pose'])
+    pprint(gp)
+    
+    
     return speed
 
-def getLinSpeed(p,cp):
+def getLinSpeed(gp,rp):
+    speed = 0
+    # gp = goal position, rp = robot position osv
     
     return speed
 
 def pprint(p):
     print json.dumps(p,sort_keys=True,indent=4, separators=(',', ': '))
 
+def getDistanceTo(gp):
+    rx = getPose()['Pose']['Position']['X']
+    ry = getPose()['Pose']['Position']['Y']
+    
+    gx = gp['Position']['X']
+    gy = gp['Position']['Y']
+    
+    distanceToGoal = sqrt((rx - gx) * (rx - gx) + (ry - gy) * (ry - gy))
+    return distanceToGoal
+
 if __name__ == '__main__':
 
     json_data=open('path-to-bed.json').read()
     data = json.loads(json_data)
-
     for p in data:
         
         angSpeed = getAngSpeed(p['Pose'],getPose()['Pose'])
-        """linSpeed = getLinSpeed(p,getPose())
-        postSpeed(angSpeed,linSpeed)"""
+        linSpeed = getLinSpeed(p['Pose'],getPose()['Pose'])
+        postSpeed(angSpeed,linSpeed)
+        
+        sys.exit(0)
         
 
     """print 'Sending commands to MRDS server', MRDS_URL
