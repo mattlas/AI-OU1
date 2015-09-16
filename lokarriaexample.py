@@ -110,22 +110,32 @@ def getBearing():
     """Returns the XY Orientation as a bearing unit vector"""
     return bearing(getPose()['Pose']['Orientation'])
 
-def getAngSpeed(gp,rp):
+def getAngSpeed(gp):
     speed = 0
     d = getDistanceTo(gp)
-    
+
+    rp = getPose()['Pose']
+
     dy = gp['Position']['Y'] - rp['Position']['Y']
     dx = gp['Position']['X'] - rp['Position']['X']
     
     angle = atan2(dy,dx)
-    pprint(getPose()['Pose'])
-    pprint(gp)
+
+    r_ori = getBearing();
+    r_ori_x = r_ori['X']
+    r_ori_y = r_ori['Y']
+
+    r_angle = atan2(r_ori_y,r_ori_x)
+    turn = angle - r_angle
+
+
     
     
     return speed
 
-def getLinSpeed(gp,rp):
+def getLinSpeed(gp):
     speed = 0
+    rp = getPose()['Pose']
     # gp = goal position, rp = robot position osv
     
     return speed
@@ -134,13 +144,18 @@ def pprint(p):
     print json.dumps(p,sort_keys=True,indent=4, separators=(',', ': '))
 
 def getDistanceTo(gp):
-    rx = getPose()['Pose']['Position']['X']
-    ry = getPose()['Pose']['Position']['Y']
+
+    rp = getPose()['Pose']
+    rx = rp['Position']['X']
+    ry = rp['Position']['Y']
     
     gx = gp['Position']['X']
     gy = gp['Position']['Y']
+
+    dx = gx-rx
+    dy = gy-ry
     
-    distanceToGoal = sqrt((rx - gx) * (rx - gx) + (ry - gy) * (ry - gy))
+    distanceToGoal = sqrt((dx * dx) + (dy * dy))
     return distanceToGoal
 
 if __name__ == '__main__':
@@ -149,12 +164,10 @@ if __name__ == '__main__':
     data = json.loads(json_data)
     for p in data:
         
-        angSpeed = getAngSpeed(p['Pose'],getPose()['Pose'])
-        linSpeed = getLinSpeed(p['Pose'],getPose()['Pose'])
+        angSpeed = getAngSpeed(p['Pose'])
+        linSpeed = getLinSpeed(p['Pose'])
         postSpeed(angSpeed,linSpeed)
-        
-        sys.exit(0)
-        
+
 
     """print 'Sending commands to MRDS server', MRDS_URL
     try:
