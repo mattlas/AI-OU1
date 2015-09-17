@@ -106,7 +106,7 @@ def qmult(q1,q2):
     q["Z"]=q1["W"]*q2["Z"]+q1["X"]*q2["Y"]-q1["Y"]*q2["X"]+q1["Z"]*q2["W"]
     return q
     
-def getBearing():
+def getHeading():
     """Returns the XY Orientation as a bearing unit vector"""
     return bearing(getPose()['Pose']['Orientation'])
 
@@ -121,14 +121,22 @@ def getAngSpeed(gp):
     
     angle = atan2(dy,dx)
 
-    r_ori = getBearing();
+    r_ori = getHeading()
     r_ori_x = r_ori['X']
     r_ori_y = r_ori['Y']
 
     r_angle = atan2(r_ori_y,r_ori_x)
-    turn = angle - r_angle
+    
+    print(angle)
+    print(r_angle)
+    print(  )
+    
+    if(angle < -(pi/2) or angle > (pi/2)):
+        turn = angle + r_angle
+    else: 
+        turn = angle - r_angle
 
-
+    speed = turn
     
     
     return speed
@@ -137,7 +145,7 @@ def getLinSpeed(gp):
     speed = 0
     rp = getPose()['Pose']
     # gp = goal position, rp = robot position osv
-    
+    speed = getDistanceTo(gp)
     return speed
 
 def pprint(p):
@@ -160,13 +168,19 @@ def getDistanceTo(gp):
 
 if __name__ == '__main__':
 
-    json_data=open('path-to-bed.json').read()
+    json_data=open('Path-around-table-and-back.json').read()
     data = json.loads(json_data)
     for p in data:
         
+        
         angSpeed = getAngSpeed(p['Pose'])
         linSpeed = getLinSpeed(p['Pose'])
-        postSpeed(angSpeed,linSpeed)
+        print(angSpeed)
+        if(linSpeed > 0.4):
+            postSpeed(angSpeed, linSpeed)
+            time.sleep(linSpeed)
+        #postSpeed(0,linSpeed)        
+        #time.sleep(linSpeed)
 
 
     """print 'Sending commands to MRDS server', MRDS_URL
