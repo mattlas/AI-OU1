@@ -55,3 +55,9 @@ docs/_build/
 
 # PyBuilder
 target/
+.idea/.name
+.idea/workspace.xml
+.idea/misc.xml
+.idea/AI-OU1.iml
+.idea/modules.xml
+.idea/vcs.xml

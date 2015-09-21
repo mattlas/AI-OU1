@@ -130,15 +130,17 @@ def getAngSpeed(gp):
     print(angle)
     print(r_angle)
     print(  )
-    
-    if(angle < -(pi/2) or angle > (pi/2)):
-        turn = angle + r_angle
-    else: 
-        turn = angle - r_angle
+
+    turn = angle - r_angle
+
+    if(turn > pi):
+        print "test"
+        turn = turn - (pi*2)
+    if turn < -pi:
+        turn = turn + (2*pi)
 
     speed = turn
-    
-    
+
     return speed
 
 def getLinSpeed(gp):
@@ -181,6 +183,7 @@ if __name__ == '__main__':
             time.sleep(linSpeed)
         #postSpeed(0,linSpeed)        
         #time.sleep(linSpeed)
+    postSpeed(0,0)
 
 
     """print 'Sending commands to MRDS server', MRDS_URL
