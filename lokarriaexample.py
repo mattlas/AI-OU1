@@ -129,29 +129,30 @@ def getAngSpeed(gp):
     
     print(angle)
     print(r_angle)
-    print(  )
+
 
     turn = angle - r_angle
+    print(turn)
 
     if(turn > pi):
-        print "test"
         turn = turn - (pi*2)
     if turn < -pi:
         turn = turn + (2*pi)
 
-    speed = turn
+    print(turn)
 
+    speed = turn
+    print("")
     return speed
 
 def getLinSpeed(gp):
     speed = 0
-    rp = getPose()['Pose']
     # gp = goal position, rp = robot position osv
     speed = getDistanceTo(gp)
     return speed
 
 def pprint(p):
-    print json.dumps(p,sort_keys=True,indent=4, separators=(',', ': '))
+    print(json.dumps(p,sort_keys=True,indent=4, separators=(',', ': ')))
 
 def getDistanceTo(gp):
 
@@ -177,8 +178,7 @@ if __name__ == '__main__':
         
         angSpeed = getAngSpeed(p['Pose'])
         linSpeed = getLinSpeed(p['Pose'])
-        print(angSpeed)
-        if(linSpeed > 0.4):
+        if(linSpeed > 0.5):
             postSpeed(angSpeed, linSpeed)
             time.sleep(linSpeed)
         #postSpeed(0,linSpeed)        
