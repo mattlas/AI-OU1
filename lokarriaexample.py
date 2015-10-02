@@ -178,47 +178,10 @@ if __name__ == '__main__':
     json_data=open('exam2015.json').read()
     data = json.loads(json_data)
 
-    
     for p in data:
-        
-        
         angSpeed = getAngSpeed(p['Pose'])
         linSpeed = getLinSpeed(p['Pose'])
         if(linSpeed > 0.5):
             postSpeed(angSpeed, linSpeed)
             time.sleep(linSpeed)
-        #postSpeed(0,linSpeed)        
-        #time.sleep(linSpeed)
     postSpeed(0,0)
-
-
-    """print 'Sending commands to MRDS server', MRDS_URL
-    try:
-        print 'Telling the robot to go streight ahead.'
-        response = postSpeed(0,0.1) 
-        print 'Waiting for a while...'
-        time.sleep(3)
-        print 'Telling the robot to go in a circle.'
-        response = postSpeed(0.4,0.1)        
-    except UnexpectedResponse, ex:
-        print 'Unexpected response from server when sending speed commands:', ex
-
-    try:
-        laser = getLaser()
-        laserAngles = getLaserAngles()
-        print 'The rightmost laser bean has angle %.3f deg from x-axis (streight forward) and distance %.3f meters.'%(
-            laserAngles[0],laser['Echoes'][0]
-        )
-        print 'Beam 1: %.3f Beam 269: %.3f Beam 270: %.3f'%( laserAngles[0]*180/pi, laserAngles[269]*180/pi, laserAngles[270]*180/pi)
-    except UnexpectedResponse, ex:
-        print 'Unexpected response from server when reading laser data:', ex
-
-
-    try:
-        pose = getPose()
-        print 'Current position: ', pose['Pose']['Position']
-        for t in range(30):    
-            print 'Current heading vector: X:{X:.3}, Y:{Y:.3}'.format(**getBearing())
-            time.sleep(1)
-    except UnexpectedResponse, ex:
-        print 'Unexpected response from server when reading position:', ex"""
