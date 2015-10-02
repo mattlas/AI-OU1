@@ -127,22 +127,18 @@ def getAngSpeed(gp):
 
     r_angle = atan2(r_ori_y,r_ori_x)
     
-    print(angle)
-    print(r_angle)
-
 
     turn = angle - r_angle
     print(turn)
 
-    if(turn > pi):
+    while(turn > pi):
         turn = turn - (pi*2)
-    if turn < -pi:
+    while(turn < -pi):
         turn = turn + (2*pi)
 
     print(turn)
 
     speed = turn
-    print("")
     return speed
 
 def getLinSpeed(gp):
@@ -169,10 +165,20 @@ def getDistanceTo(gp):
     distanceToGoal = sqrt((dx * dx) + (dy * dy))
     return distanceToGoal
 
+def xyDistance(pose1,pose2):
+    pos1, pos2 = pose1['Pose']['Position'], pose2['Pose']['Position']
+    x1, y1 = pos1['X'], pos1['Y']
+    x2, y2 = pos2['X'], pos2['Y']
+    dx = x1-x2
+    dy = y1-y2
+    return math.sqrt(dx*dx+dy*dy)
+
 if __name__ == '__main__':
 
-    json_data=open('Path-around-table-and-back.json').read()
+    json_data=open('exam2015.json').read()
     data = json.loads(json_data)
+
+    
     for p in data:
         
         
