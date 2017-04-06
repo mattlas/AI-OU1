@@ -8,7 +8,7 @@ pipeline {
           echo 'Hej jonas'
         }
         
-        pwd()
+        isUnix()
       }
     }
   }
