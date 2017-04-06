@@ -8,6 +8,7 @@ pipeline {
           echo 'Hej jonas'
         }
         
+        pwd()
       }
     }
   }
